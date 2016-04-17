@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragment.MovieDetailsActivityFragment"
+    tools:showIn="@layout/activity_movie_details">
+
+
+    <ImageView
+        android:id="@+id/movie_poster"
+        android:padding="@dimen/fab_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/movie_label"
+        android:paddingTop="@dimen/fab_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/movie_poster" />
+
+    <TextView
+        android:id="@+id/movie_viewer_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/movie_label"
+        android:layout_toRightOf="@id/movie_poster"/>
+
+    <TextView
+        android:id="@+id/movie_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/movie_viewer_rating"
+        android:layout_toRightOf="@id/movie_poster" />
+
+    <TextView
+        android:id="@+id/movie_plot_synopsis"
+        android:padding="@dimen/fab_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/movie_poster" />
+
+</RelativeLayout>
