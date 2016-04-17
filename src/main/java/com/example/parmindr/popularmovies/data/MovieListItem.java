@@ -1,4 +1,4 @@
-package popularmovies.view;
+package com.example.parmindr.popularmovies.data;
 
 import android.net.Uri;
 import android.os.Parcel;

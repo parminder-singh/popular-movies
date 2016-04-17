@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import popularmovies.view.MovieListItem;
+import com.example.parmindr.popularmovies.data.MovieListItem;
 
 public class MovieDetailsActivityFragment extends Fragment {
 

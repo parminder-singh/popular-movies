@@ -1,4 +1,4 @@
-package popularmovies.adapter;
+package com.example.parmindr.popularmovies.adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.parmindr.popularmovies.R;
-import popularmovies.view.MovieListItem;
+import com.example.parmindr.popularmovies.data.MovieListItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

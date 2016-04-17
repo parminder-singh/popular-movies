@@ -22,8 +22,8 @@ import com.example.parmindr.popularmovies.R;
 import com.example.parmindr.popularmovies.activity.MovieDetailsActivity;
 import com.example.parmindr.popularmovies.activity.SettingsActivity;
 
-import popularmovies.adapter.MoviesAdapter;
-import popularmovies.view.MovieListItem;
+import com.example.parmindr.popularmovies.adapter.MoviesAdapter;
+import com.example.parmindr.popularmovies.data.MovieListItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
