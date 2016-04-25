@@ -1,11 +1,15 @@
 package com.example.parmindr.popularmovies.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.parmindr.popularmovies.BuildConfig;
 import com.example.parmindr.popularmovies.R;
@@ -35,7 +40,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.xml.datatype.Duration;
 
 
 public class MoviesCollectionFragment extends Fragment {
@@ -132,6 +140,7 @@ public class MoviesCollectionFragment extends Fragment {
         private final static String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p/w780";
         private final static String API_KEY = "api_key";
         private final static String REQUEST_METHOD_GET = "GET";
+        boolean isOnline;
 
         @Override
         protected List<MovieListItem> doInBackground(String[] params) {
@@ -140,9 +149,13 @@ public class MoviesCollectionFragment extends Fragment {
             BufferedReader bufferedReader = null;
             List<MovieListItem> movieListItems = null;
 
+            if (!isOnline(getContext())) {
+                return Arrays.asList();
+            }
+
             try {
 
-                if(params[0].equals(getString(R.string.pref_sort_highest_rated_key))){
+                if (params[0].equals(getString(R.string.pref_sort_highest_rated_key))) {
                     connection = getMovieDBConnection(TOP_RATED_MOVIE_BASE_URL);
                 } else {
                     connection = getMovieDBConnection(POPULAR_MOVIE_BASE_URL);
@@ -270,9 +283,18 @@ public class MoviesCollectionFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<MovieListItem> movieListItems) {
+            if (!isOnline) {
+                Toast.makeText(getContext(), "Please check network connectivity and try again", Toast.LENGTH_LONG).show();
+            }
             moviesAdapter.clear();
             moviesAdapter.addAll(movieListItems);
             MoviesCollectionFragment.this.movieListItems = movieListItems;
+        }
+
+        private boolean isOnline(Context context) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            return isOnline = (networkInfo != null && networkInfo.isConnected());
         }
     }
 }
