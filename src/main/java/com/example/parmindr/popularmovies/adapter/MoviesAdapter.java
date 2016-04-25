@@ -2,6 +2,7 @@ package com.example.parmindr.popularmovies.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,20 +25,36 @@ public class MoviesAdapter extends ArrayAdapter<MovieListItem> {
         super(context, 0);
     }
 
+    private static final String LOG_TAG = MoviesAdapter.class.getSimpleName();
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        ViewHolder viewHolder;
+        if(convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_movie, parent, false);
+            ImageView moviePoster = (ImageView) convertView.findViewById(R.id.movie_poster);
+            viewHolder = new ViewHolder();
+            viewHolder.moviePoster = moviePoster;
+            convertView.setTag(viewHolder);
+            Log.d(LOG_TAG, "Creating new view");
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
+            Log.d(LOG_TAG, "Recycling view");
+        }
+
         MovieListItem movieListItem = getItem(position);
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_movie, parent, false);
+        fetchAndLoadMoviePoster(movieListItem.getPosterUri(), viewHolder.moviePoster);
 
-        ImageView moviePosterView = (ImageView) rootView.findViewById(R.id.movie_poster);
-        fetchAndLoadMoviePoster(movieListItem.getPosterUri(), moviePosterView);
-
-        return rootView;
+        return convertView;
     }
 
     private void fetchAndLoadMoviePoster(Uri moviePosterUri, ImageView moviePosterView) {
         Picasso.with(getContext()).load(moviePosterUri).into(moviePosterView);
+    }
+
+    static class ViewHolder{
+        ImageView moviePoster;
     }
 
 }
